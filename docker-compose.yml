@@ -2,25 +2,34 @@ version: '3.3'
 
 services:
   web:
+    container_name: php_7
     build:
-      context: ./php
+      context: ./
       dockerfile: Dockerfile
-    container_name: php73
     volumes:
       - ./php:/var/www/html/
+      - ./docker-compose/apache:/etc/apache2/sites-available
     ports:
       - 8000:80
-    depends_on: 
-      - db
+    depends_on:
+      - mysql
+    networks:
+      - php7
 
-  db:
-    container_name: mysql8
+  mysql:
+    container_name: mysql_latest
     image: mysql:latest
     ports:
       - 3306:3306
     command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: test_db
-      MYSQL_USER: devuser
-      MYSQL_PASSWORD: devpass
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+    networks:
+      - php7
+
+networks:
+  php7:
+    driver: bridge
