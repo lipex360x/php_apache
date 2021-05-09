@@ -6,7 +6,12 @@ sudo chmod 777 www -R
 
 apt install apache2 mysql-server php libapache2-mod-php php-mysql -y
 
+service apache2 status
+
+service mysql status
+
 mysql -u root -p
+
 
 ---
 ```sql
@@ -16,3 +21,14 @@ GRANT ALL ON *.* TO 'admin'@'localhost';
 
 FLUSH PRIVILEGES;
 ```
+
+ALTER USER 'admin'@'localhost' IDENTIFIED WITH mysql_native_password BY '456';
+
+quit
+
+
+---
+
+ln -s /var/www/html ~/www
+
+code /etc/apache2
