@@ -6,6 +6,13 @@ sudo chmod 777 www -R
 
 apt install apache2 mysql-server php libapache2-mod-php php-mysql -y
 
+mysql -u root -p
+
+---
+```sql
 CREATE USER 'admin'@'localhost' IDENTIFIED WITH mysql_native_password BY '123';
+
 GRANT ALL ON *.* TO 'admin'@'localhost';
+
 FLUSH PRIVILEGES;
+```
